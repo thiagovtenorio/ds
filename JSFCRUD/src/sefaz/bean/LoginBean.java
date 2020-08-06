@@ -3,11 +3,12 @@ package sefaz.bean;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 
 import sefaz.manager.UsuarioManager;
 
 @SuppressWarnings("restriction")
-@ManagedBean @RequestScoped
+@ManagedBean @ViewScoped
 public class LoginBean {
 	private String login;
 	private String senha;
@@ -19,9 +20,9 @@ public class LoginBean {
 	}
 	public String entrar() {
 		if(usuarioManager.login(this.login, this.senha)) {
-			return "sgadPaginaPrincipal.xhtml";
+			return "sefazPaginaPrincipal.xhtml";
 		}else {
-			return "sgadLogin.xhtml";
+			return "sefazLogin.xhtml";
 		}
 	}
 
