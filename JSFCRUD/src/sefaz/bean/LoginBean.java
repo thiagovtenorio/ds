@@ -6,8 +6,6 @@ import javax.faces.bean.RequestScoped;
 
 import sefaz.manager.UsuarioManager;
 
-
-
 @SuppressWarnings("restriction")
 @ManagedBean @RequestScoped
 public class LoginBean {
