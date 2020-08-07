@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:tp = "http://java.sun.com/jsf/composite/menu"
+      xmlns:p="http://primefaces.org/ui"> 
+	<h:head>
+	    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1" http-equiv="X-UA-Conpatible" />
+	    <h:outputStylesheet library="css" name="bootstrap.min.css" />
+	    <title>Desafio Sefaz</title>
+	    <style type="text/css">
+	        .btnWidth {
+	            width: 80px;
+	        }     
+	    </style>
+	</h:head>
+	<h:body>
+		<tp:menuSefaz />
+		<center><h2><h:outputText value="Pesquisar Usuário"/></h2></center>
+		<h:form id="studentForm">
+			  <div class="form-group">
+			  	<div class="col-sm-4">
+		 	   	</div>
+		 	   	<div class="col-sm-4">
+				 <h:dataTable id="usuarioTable" binding="#{table}" value="#{usuarioListBean.usuarioList}" var="usuario" class="table table-striped table-hover table-bordered tableUpdated">
+				 	<h:column>
+				 		<f:facet name="header">Nome</f:facet>
+				 		<h:outputText value="#{usuario.nome}" />
+				 	</h:column>
+				 	<h:column>
+				 		<f:facet name="header">E-mail</f:facet>
+				 		<h:outputText value="#{usuario.email}" />
+				 	</h:column>
+				 	<h:column>
+				 		<f:facet name="header">Ações</f:facet>
+				 		<p:commandButton icon="ui-icon-search" title="Detalhar"> 
+				 		</p:commandButton>
+				 		<p:commandButton icon="ui-icon-pencil" title="Editar" action="#{usuarioListBean.alterar}" >
+				 			<f:setPropertyActionListener target="#{usuarioListBean.usuario}" value="#{usuario}"/>
+				 		</p:commandButton>
+				 		<p:commandButton icon="ui-icon-closethick" title="Excluir"> 
+				 		</p:commandButton>
+				 	</h:column>
+				 </h:dataTable>
+		 	   	</div>
+			  </div>
+		</h:form>
+		
+</h:body>
+</html>

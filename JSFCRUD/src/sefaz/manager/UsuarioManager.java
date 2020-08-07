@@ -1,18 +1,39 @@
 package sefaz.manager;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
+import sefaz.dao.TelefoneDAO;
 import sefaz.dao.UsuarioDAO;
+import sefaz.dominio.Telefone;
 import sefaz.dominio.Usuario;
 
 public class UsuarioManager { 
 	private UsuarioDAO usuarioDAO;
+	private TelefoneDAO telefoneDAO;
 	
 	public UsuarioManager(){
 		this.usuarioDAO=new UsuarioDAO();
+		this.telefoneDAO=new TelefoneDAO();
 	}
+	public ArrayList<Usuario> list(){
+		try {
+			return usuarioDAO.list();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return new ArrayList<Usuario>();
+	}
+	
 	public void insert(Usuario usuario) {
-		this.usuarioDAO.insert(usuario);
+		int usuarioId=usuarioDAO.insert(usuario);
+		
+		for(Telefone telefone: usuario.getTelefones()) {
+			telefone.setUsuarioId(usuarioId);
+			this.telefoneDAO.insert(telefone);
+		}
+		
 	}
 	
 	public boolean login(String login, String senha) {
