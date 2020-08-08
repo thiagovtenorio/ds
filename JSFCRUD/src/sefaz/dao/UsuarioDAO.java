@@ -53,7 +53,27 @@ public class UsuarioDAO extends DAO{
 	    		e.printStackTrace();
 	    	}
 		 return generatedKey;
-	  }
+	 }
+	 public void update(Usuario usuario) throws SQLException {
+		 pstmt = getConnection().prepareStatement("update sefaz.usuario set nome=?, login=?, senha=?, email=? where idusuario=?");
+		 pstmt.setString(1, usuario.getNome());
+		 pstmt.setString(2, usuario.getLogin());
+		 pstmt.setString(3, usuario.getSenha());
+		 pstmt.setString(4, usuario.getEmail());
+		 pstmt.setInt(5, usuario.getId());
+		 pstmt.executeUpdate();
+         connObj.close();
+	 }
+	 public void delete(Usuario usuario) {
+		 try {
+			 pstmt = getConnection().prepareStatement("delete from sefaz.usuario where idusuario = "+usuario.getId());  
+	         pstmt.executeUpdate();  
+	         connObj.close();
+		 } catch(Exception e) {
+			 
+		 }
+	 }
+	 
 	 public boolean login(String login, String senha) throws SQLException {
 		 
 		 StringBuilder query=new StringBuilder();

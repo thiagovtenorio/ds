@@ -1,5 +1,8 @@
 package sefaz.dao;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 import sefaz.dominio.Telefone;
 
 public class TelefoneDAO extends DAO{
@@ -15,5 +18,23 @@ public class TelefoneDAO extends DAO{
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	public ArrayList<Telefone> findTelefonesByUsuarioId(int usuarioId) throws SQLException{
+		ArrayList<Telefone> telefoneList=new ArrayList<Telefone>();
+		stmtObj = getConnection().createStatement();    
+		resultSetObj = stmtObj.executeQuery("select * from sefaz.telefoneusuario where idusuario ="+usuarioId);
+		
+		Telefone telefone=new Telefone();
+		while(resultSetObj.next()) { 
+			telefone=new Telefone();
+			telefone.setId(resultSetObj.getInt("id"));
+			telefone.setUsuarioId(resultSetObj.getInt("idusuario"));
+			telefone.setDdd(resultSetObj.getInt("ddd"));
+			telefone.setNumero(resultSetObj.getString("numero"));
+			telefone.setTipo(resultSetObj.getString("tipo"));
+			telefoneList.add(telefone);
+		}
+		connObj.close();
+		return telefoneList;
 	}
 }

@@ -35,6 +35,16 @@ public class UsuarioManager {
 		}
 		
 	}
+	public void update(Usuario usuario) {
+		try {
+			this.usuarioDAO.update(usuario);
+		}catch(Exception e) {
+			
+		}
+	}
+	public void delete(Usuario usuario) {
+		this.usuarioDAO.delete(usuario);
+	}
 	
 	public boolean login(String login, String senha) {
 		try {

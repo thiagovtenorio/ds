@@ -36,12 +36,14 @@
 				 	</h:column>
 				 	<h:column>
 				 		<f:facet name="header">Ações</f:facet>
-				 		<p:commandButton icon="ui-icon-search" title="Detalhar"> 
+				 		<p:commandButton icon="ui-icon-search" title="Detalhar"  action="#{usuarioListBean.detalhar}"> 
+				 			<f:setPropertyActionListener target="#{usuarioListBean.usuario}" value="#{usuario}"/>
 				 		</p:commandButton>
 				 		<p:commandButton icon="ui-icon-pencil" title="Editar" action="#{usuarioListBean.alterar}" >
 				 			<f:setPropertyActionListener target="#{usuarioListBean.usuario}" value="#{usuario}"/>
 				 		</p:commandButton>
-				 		<p:commandButton icon="ui-icon-closethick" title="Excluir"> 
+				 		<p:commandButton icon="ui-icon-closethick" title="Excluir" action="#{usuarioListBean.excluir}"> 
+				 			<f:setPropertyActionListener target="#{usuarioListBean.usuario}" value="#{usuario}"/>
 				 		</p:commandButton>
 				 	</h:column>
 				 </h:dataTable>

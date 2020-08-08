@@ -25,22 +25,34 @@
 		 	 <div class="form-group">
 		 	 	<div class="col-sm-4"></div>
 		 	 	<div class="col-sm-4">
-		 	 		<h2>Cadastrar Usuário</h2>
+		 	 		<p:outputPanel rendered="#{usuarioEditBean.operacaoInclusao}">
+		 	 			<h2>Cadastrar Usuário</h2>
+		 	 		</p:outputPanel>
+		 	 		<p:outputPanel rendered="#{usuarioEditBean.operacaoAlteracao}">
+		 	 			<h2>Alterar Usuário</h2>
+		 	 		</p:outputPanel>
+		 	 		<p:outputPanel rendered="#{usuarioEditBean.operacaoDetalhamento}">
+		 	 			<h2>Detalhar Usuário</h2>
+		 	 		</p:outputPanel>
 		 	 	</div>
 		 	 </div>
 		 	 <hr/>
 		 	 <div class="form-group">
 		 	 	 <h:outputLabel for="nome" class="control-label col-sm-4">Nome:</h:outputLabel>
 		 	 	 <div class="col-sm-4">
-		 	 	 	 <h:inputText id="nome" class="form-control" value="#{usuarioEditBean.usuario.nome}" style="width:300px;">
+		 	 	 	 <h:inputText id="nome" class="form-control" value="#{usuarioEditBean.usuario.nome}" style="width:300px;" rendered="#{not usuarioEditBean.operacaoDetalhamento}">
 	                </h:inputText>
+	                <h:outputText value="#{usuarioEditBean.usuario.nome}" style="width:300px;" rendered="#{usuarioEditBean.operacaoDetalhamento}">
+	                </h:outputText>
 		 	 	 </div>
 		 	 </div>
 		 	 <div class="form-group">
 		 	 	 <h:outputLabel for="email" class="control-label col-sm-4">E-mail:</h:outputLabel>
 		 	 	 <div class="col-sm-4">
-		 	 	 	 <h:inputText id="email" class="form-control" value="#{usuarioEditBean.usuario.email}" style="width:300px;">
+		 	 	 	 <h:inputText id="email" class="form-control" value="#{usuarioEditBean.usuario.email}" style="width:300px;" rendered="#{not usuarioEditBean.operacaoDetalhamento}">
 	                </h:inputText>
+	                 <h:outputText value="#{usuarioEditBean.usuario.email}" style="width:300px;" rendered="#{usuarioEditBean.operacaoDetalhamento}">
+	                </h:outputText>
 		 	 	 </div>
 		 	 </div>
 		 	  <div class="form-group">
@@ -49,30 +61,33 @@
 		 	  		
 		 	  	</div>
 		 	  </div>
-		 	   <div class="form-group"> 
-		 	   		<div class="col-sm-4"> </div>
-					<div class="col-sm-1"> 
-			 	   		<h:outputLabel for="ddd" class="control-label" style="text-align:center;">DDD:</h:outputLabel>
-						<h:inputText id="ddd" class="form-control" value="#{usuarioEditBean.telefone.ddd}">
-						</h:inputText>
-					</div>
-					
-					<div class="col-sm-1"> 
-						<h:outputLabel for="numero" class="control-label" >Numero:</h:outputLabel>
-						<h:inputText id="numero" class="form-control" value="#{usuarioEditBean.telefone.numero}">
-						</h:inputText>
-					</div>
-					
-					<div class="col-sm-1"> 
-						<h:outputLabel for="tipo" class="control-label">Tipo:</h:outputLabel>
-						<h:inputText id="tipo" class="form-control" value="#{usuarioEditBean.telefone.tipo}">
-						</h:inputText>
-					</div>
-					<div class="col-sm-1">
-						<h:outputLabel class="control-label">Ação:</h:outputLabel>			
-						<h:commandButton value="Adicionar" action="#{usuarioEditBean.adicionarTelefone}" class="btn btn-primary form-control" update="telefoneTable"/>
-					</div>
-		 	   </div>
+		 	  <p:outputPanel rendered="#{not usuarioEditBean.operacaoDetalhamento}">		 	  
+			 	   <div class="form-group"> 
+			 	   		<div class="col-sm-4"> </div>
+						<div class="col-sm-1"> 
+				 	   		<h:outputLabel for="ddd" class="control-label" style="text-align:center;">DDD:</h:outputLabel>
+							<h:inputText id="ddd" class="form-control" value="#{usuarioEditBean.telefone.ddd}">
+							</h:inputText>
+						</div>
+						
+						<div class="col-sm-1"> 
+							<h:outputLabel for="numero" class="control-label" >Numero:</h:outputLabel>
+							<h:inputText id="numero" class="form-control" value="#{usuarioEditBean.telefone.numero}">
+							</h:inputText>
+						</div>
+						
+						<div class="col-sm-1"> 
+							<h:outputLabel for="tipo" class="control-label">Tipo:</h:outputLabel>
+							<h:inputText id="tipo" class="form-control" value="#{usuarioEditBean.telefone.tipo}">
+							</h:inputText>
+						</div>
+						<div class="col-sm-1">
+							<h:outputLabel class="control-label">Ação:</h:outputLabel>			
+							<h:commandButton value="Adicionar" action="#{usuarioEditBean.adicionarTelefone}" class="btn btn-primary form-control" update="telefoneTable"/>
+						</div>
+			 	   </div>
+		 	  </p:outputPanel>
+		 	   
 		 	   <div class="form-group">
 		 	   		<div class="col-sm-4">
 		 	   		</div>
@@ -90,9 +105,9 @@
     						 	<f:facet name="header">Tipo</f:facet>
         						<h:outputText value="#{telefone.tipo}" />
     						 </h:column>
-    						  <h:column >
+    						  <h:column rendered="#{not usuarioEditBean.operacaoDetalhamento}">
     						  	<f:facet name="header">Ações</f:facet>
-    						  	<h:commandButton value="Remover" class="btn btn-danger" />
+    						  	<p:commandButton  icon="ui-icon-closethick" class="btn btn-danger" title="Excluir"/>
     						  </h:column>
 		 	   			</h:dataTable>
 		 	   		</div>
@@ -100,22 +115,29 @@
 		 	  <div class="form-group">
 		 	  	<h:outputLabel for="login" class="control-label col-sm-4">Login:</h:outputLabel>
 		 	  	<div class="col-sm-4">
-		 	  		<h:inputText id="login" value="#{usuarioEditBean.usuario.login}" class="form-control" style="width:200px;">
+		 	  		<h:inputText id="login" value="#{usuarioEditBean.usuario.login}" class="form-control" style="width:200px;" rendered="#{not usuarioEditBean.operacaoDetalhamento}">
 	                </h:inputText>
+	                <h:outputText value="#{usuarioEditBean.usuario.login}" style="width:200px;" rendered="#{usuarioEditBean.operacaoDetalhamento}">
+	                </h:outputText>
 		 	  	</div>
 		 	  </div>
 		 	   <div class="form-group">
 		 	   	<h:outputLabel for="senha" class="control-label col-sm-4">Senha:</h:outputLabel>
 		 	   	<div class="col-sm-4">
-		 	   		<h:inputText id="senha" value="#{usuarioEditBean.usuario.senha}" class="form-control" style="width:200px;">
+		 	   		<h:inputText id="senha" value="#{usuarioEditBean.usuario.senha}" class="form-control" style="width:200px;" rendered="#{not usuarioEditBean.operacaoDetalhamento}">
 	                </h:inputText>
+	                <h:outputText value="#{usuarioEditBean.usuario.senha}" style="width:200px;" rendered="#{usuarioEditBean.operacaoDetalhamento}">
+	                </h:outputText>
 		 	  	</div>
 		 	  </div>
 		 	  <div class="form-group">
 		 	  	<div class="col-sm-4"></div>
 		 	  	 <div class="col-sm-4">
 		 	  	 	<div class="col-sm-2">
-	                    <h:commandButton value="Concluir" action="#{usuarioEditBean.cadastrar}" class="btn btn-success btnWidth" />
+		 	  	 		 <h:commandButton value="Voltar" class="btn btn-primary" action="usuarioList.xhtml"/>
+		 	  	 	</div>
+		 	  	 	<div class="col-sm-2">
+	                    <h:commandButton value="Concluir" action="#{usuarioEditBean.salvar}" class="btn btn-success btnWidth" />
 	                </div>
 		 	  	 </div>
 		 	  </div>

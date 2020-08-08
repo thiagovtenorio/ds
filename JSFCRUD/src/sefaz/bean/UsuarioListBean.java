@@ -26,6 +26,10 @@ public class UsuarioListBean {
 		this.usuarioList=usuarioManager.list();
 	}
 	
+	public void excluir() {
+		this.usuarioManager.delete(this.usuario);
+	}
+	
 	public String alterar() {
 		Map<String,Object> sessionMapObj = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
 		sessionMapObj.put("operacao", "alterar");
@@ -33,7 +37,10 @@ public class UsuarioListBean {
 		return "/usuarioEdit.xhtml?faces-redirect=true";
 	}
 	public String detalhar() {
-		return "";
+		Map<String,Object> sessionMapObj = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+		sessionMapObj.put("operacao", "detalhar");
+		sessionMapObj.put("usuario", usuario);
+		return "/usuarioEdit.xhtml?faces-redirect=true";
 	}
 	
 	public ArrayList<Usuario> getUsuarioList() {

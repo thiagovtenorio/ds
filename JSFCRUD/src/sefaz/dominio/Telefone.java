@@ -1,11 +1,18 @@
 package sefaz.dominio;
 
 public class Telefone {
+	private int id;
 	private int usuarioId;
 	private int ddd;
 	private String numero;
 	private String tipo;
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public int getDdd() {
 		return ddd;
 	}
