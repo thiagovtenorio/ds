@@ -20,7 +20,25 @@
 	<h:body>
 		<tp:menuSefaz />
 		<center><h2><h:outputText value="Pesquisar Usuário"/></h2></center>
-		<h:form id="studentForm">
+		<h:form id="usuarioForm">
+			<div class="form-group">
+				<div class="col-sm-4">
+				</div>
+				<h:outputLabel for="nome" class="control-label col-sm-1" style="width:4%;">Nome:</h:outputLabel>
+				<div class="col-sm-6">
+					<div class="col-sm-3">
+						<p:inputText id="nome" value="#{usuarioListBean.filtro.nome}"
+							maxlength="45"
+							rendered="#{not usuarioEditBean.operacaoDetalhamento}">
+						</p:inputText>
+					</div>
+					<div class="col-sm-1">
+						<h:commandButton value="Pesquisar" class="btn btn-primary" action="#{usuarioListBean.pesquisar}" update="usuarioTable"/>
+					</div>
+				</div>
+			 </div>
+			 <div class="form-group">
+			 </div>
 			  <div class="form-group">
 			  	<div class="col-sm-4">
 		 	   	</div>
@@ -36,20 +54,26 @@
 				 	</h:column>
 				 	<h:column>
 				 		<f:facet name="header">Ações</f:facet>
-				 		<p:commandButton icon="ui-icon-search" title="Detalhar"  action="#{usuarioListBean.detalhar}"> 
+				 		<p:commandButton icon="ui-icon-search" title="Detalhar" action="#{usuarioListBean.detalhar}"> 
 				 			<f:setPropertyActionListener target="#{usuarioListBean.usuario}" value="#{usuario}"/>
 				 		</p:commandButton>
 				 		<p:commandButton icon="ui-icon-pencil" title="Editar" action="#{usuarioListBean.alterar}" >
 				 			<f:setPropertyActionListener target="#{usuarioListBean.usuario}" value="#{usuario}"/>
 				 		</p:commandButton>
-				 		<p:commandButton icon="ui-icon-closethick" title="Excluir" action="#{usuarioListBean.excluir}"> 
+				 		<p:commandButton icon="ui-icon-closethick" title="Excluir" action="#{usuarioListBean.excluir}" > 
 				 			<f:setPropertyActionListener target="#{usuarioListBean.usuario}" value="#{usuario}"/>
+				 			<p:confirm header="Confirmação" message="Tem certeza que deseja excluir esse usuário?" icon="pi pi-exclamation-triangle" />
 				 		</p:commandButton>
+				 		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				        	<p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+				        	<p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+    					</p:confirmDialog> 
 				 	</h:column>
 				 </h:dataTable>
 		 	   	</div>
+				<div class="col-sm-4">
+		 	   	</div>
 			  </div>
 		</h:form>
-		
 </h:body>
 </html>

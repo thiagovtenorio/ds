@@ -8,7 +8,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.PrimeFaces;
+
 import sefaz.dominio.Usuario;
+import sefaz.filtro.FiltroUsuario;
 import sefaz.manager.UsuarioManager;
 
 @SuppressWarnings("restriction")
@@ -20,14 +23,21 @@ public class UsuarioListBean {
 	
 	private Usuario usuario;
 	
+	private FiltroUsuario filtro;
+	
 	@PostConstruct
     public void init() {
 		this.usuarioManager=new UsuarioManager();
 		this.usuarioList=usuarioManager.list();
+		this.filtro=new FiltroUsuario();
+	}
+	public void pesquisar() {
+		this.usuarioList=usuarioManager.findByFilter(filtro);
 	}
 	
-	public void excluir() {
+	public String excluir() {
 		this.usuarioManager.delete(this.usuario);
+		return "/usuarioList.xhtml?faces-redirect=true";
 	}
 	
 	public String alterar() {
@@ -55,6 +65,12 @@ public class UsuarioListBean {
 	}
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+	public FiltroUsuario getFiltro() {
+		return filtro;
+	}
+	public void setFiltro(FiltroUsuario filtro) {
+		this.filtro = filtro;
 	}
 	
 }

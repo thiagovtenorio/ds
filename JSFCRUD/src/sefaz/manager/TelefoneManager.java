@@ -19,4 +19,11 @@ public class TelefoneManager {
 			return new ArrayList<Telefone>();
 		}
 	}
+	public void delete(Telefone telefone) {
+		try {
+			telefoneDAO.delete(telefone);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

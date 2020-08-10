@@ -16,10 +16,12 @@ import sefaz.manager.UsuarioManager;
 
 
 @SuppressWarnings("restriction")
-@ManagedBean @RequestScoped
+@ManagedBean @ViewScoped
 public class UsuarioEditBean {
 	private Usuario usuario;
 	private Telefone telefone;
+	private Telefone telefoneEscolhido;
+	private ArrayList<String> tiposTelefone;
 	private UsuarioManager usuarioManager;
 	private TelefoneManager telefoneManager;
 	private String nomeColaborador;
@@ -47,6 +49,12 @@ public class UsuarioEditBean {
 		
 		this.usuarioManager=new UsuarioManager();
 		this.telefone=new Telefone();
+		this.tiposTelefone=new ArrayList<String>();
+		this.tiposTelefone.add("Fixo");
+		this.tiposTelefone.add("Celular");
+		this.tiposTelefone.add("Fax");
+		
+		
 	}
 	public boolean isOperacaoInclusao() {
 		return !operacao.equals("alterar")&&!operacao.equals("detalhar");
@@ -58,7 +66,15 @@ public class UsuarioEditBean {
 	public boolean isOperacaoDetalhamento() {
 		return operacao.equals("detalhar");
 	}
+	public boolean isPossuiTelefone() {
+		return !this.usuario.getTelefones().isEmpty();
+	}
 	
+	public boolean isUsuarioLogado() {
+		Map<String,Object> sessionMapObj = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+		Usuario usuario=(Usuario)sessionMapObj.get("usuarioLogado");
+		return usuario!=null;
+	}
 	
 	public Usuario getUsuarioFromAnotherBean() {
 		Map<String,Object> sessionMapObj = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
@@ -77,6 +93,10 @@ public class UsuarioEditBean {
 		this.usuario.getTelefones().add(this.telefone);
 		this.telefone=new Telefone();
 	}
+	public void removerTelefone() {
+		this.usuario.getTelefones().remove(this.telefoneEscolhido);
+		this.telefoneManager.delete(this.telefoneEscolhido);
+	}
 	public String salvar() {
 		if(isOperacaoInclusao()) {
 			this.usuarioManager.insert(this.usuario);
@@ -84,7 +104,12 @@ public class UsuarioEditBean {
 		if(isOperacaoAlteracao()) {
 			this.usuarioManager.update(this.usuario);
 		}
-		return "usuarioList.xhtml";
+		
+		if(isUsuarioLogado()) {
+			return "usuarioList.xhtml";
+		}else {			
+			return "sefazLogin.xhtml";
+		}
 	}
 	
 	public String cadastrar() {
@@ -113,6 +138,19 @@ public class UsuarioEditBean {
 
 	public void setTelefone(Telefone telefone) {
 		this.telefone = telefone;
+	}
+	
+	public Telefone getTelefoneEscolhido() {
+		return telefoneEscolhido;
+	}
+	public void setTelefoneEscolhido(Telefone telefoneEscolhido) {
+		this.telefoneEscolhido = telefoneEscolhido;
+	}
+	public ArrayList<String> getTiposTelefone() {
+		return tiposTelefone;
+	}
+	public void setTiposTelefone(ArrayList<String> tiposTelefone) {
+		this.tiposTelefone = tiposTelefone;
 	}
 
 }

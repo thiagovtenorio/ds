@@ -19,6 +19,18 @@ public class TelefoneDAO extends DAO{
 			e.printStackTrace();
 		}
 	}
+	public void delete(Telefone telefone) throws SQLException {
+		pstmt = getConnection().prepareStatement("delete from sefaz.telefoneusuario where id = "+telefone.getId());  
+        pstmt.executeUpdate();  
+        connObj.close();
+	}
+	public void update(Telefone telefone) throws SQLException {
+		 pstmt = getConnection().prepareStatement("update sefaz.telefoneusuario set ddd=?, numero=?, tipo=? where idusuario=? and id=?");
+		 
+		 pstmt.executeUpdate();
+         connObj.close();
+	}
+	
 	public ArrayList<Telefone> findTelefonesByUsuarioId(int usuarioId) throws SQLException{
 		ArrayList<Telefone> telefoneList=new ArrayList<Telefone>();
 		stmtObj = getConnection().createStatement();    

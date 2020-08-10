@@ -6,6 +6,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import sefaz.dominio.Usuario;
+import sefaz.filtro.FiltroUsuario;
 
 
 public class UsuarioDAO extends DAO{
@@ -29,9 +30,34 @@ public class UsuarioDAO extends DAO{
  			usuario.setSenha(resultSetObj.getString("senha"));
  			usuarioList.add(usuario);
  		 }
- 		 
 		 return usuarioList;
 	 }
+	 public ArrayList<Usuario> findByFilter(FiltroUsuario filtro) throws SQLException{
+		 ArrayList<Usuario> usuarioList=new ArrayList<Usuario>();
+		 StringBuilder query=new StringBuilder();
+		 query.append("select * from sefaz.usuario");
+		 
+		 if(filtro.getNome()!=null) {
+			 query.append(" where nome like '");
+			 query.append(filtro.getNome());
+			 query.append("%'");
+		 }
+		 
+		 stmtObj = getConnection().createStatement();    
+ 		 resultSetObj = stmtObj.executeQuery(query.toString());
+ 		 Usuario usuario=new Usuario();
+ 		 while(resultSetObj.next()) {
+ 			usuario=new Usuario();
+ 			usuario.setId(resultSetObj.getInt("idusuario"));
+ 			usuario.setNome(resultSetObj.getString("nome"));
+ 			usuario.setEmail(resultSetObj.getString("email"));
+ 			usuario.setLogin(resultSetObj.getString("login"));
+ 			usuario.setSenha(resultSetObj.getString("senha"));
+ 			usuarioList.add(usuario);
+ 		 }
+		 return usuarioList;
+	 }
+	 
 	 public int insert(Usuario usuario) {
 		 int generatedKey = 0;
 		 	try {
@@ -70,11 +96,11 @@ public class UsuarioDAO extends DAO{
 	         pstmt.executeUpdate();  
 	         connObj.close();
 		 } catch(Exception e) {
-			 
+			 e.printStackTrace();
 		 }
 	 }
 	 
-	 public boolean login(String login, String senha) throws SQLException {
+	 public Usuario login(String login, String senha) throws SQLException {
 		 
 		 StringBuilder query=new StringBuilder();
 		 query.append("select * from sefaz.usuario where login='");
@@ -86,11 +112,12 @@ public class UsuarioDAO extends DAO{
          
          Usuario usuario=new Usuario();
          while(resultSetObj.next()) {
+        	usuario.setNome(resultSetObj.getString("nome"));
         	usuario.setLogin(resultSetObj.getString("login"));
         	usuario.setSenha(resultSetObj.getString("senha"));
          }
          connObj.close();
          
-		 return senha.equals(usuario.getSenha());
+		 return usuario;
 	 }
 }

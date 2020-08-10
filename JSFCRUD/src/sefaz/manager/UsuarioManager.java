@@ -7,6 +7,7 @@ import sefaz.dao.TelefoneDAO;
 import sefaz.dao.UsuarioDAO;
 import sefaz.dominio.Telefone;
 import sefaz.dominio.Usuario;
+import sefaz.filtro.FiltroUsuario;
 
 public class UsuarioManager { 
 	private UsuarioDAO usuarioDAO;
@@ -25,6 +26,15 @@ public class UsuarioManager {
 		}
 		return new ArrayList<Usuario>();
 	}
+	public ArrayList<Usuario> findByFilter(FiltroUsuario filtro){
+		 ArrayList<Usuario> usuarioList=new ArrayList<Usuario>();
+		 try {
+			 usuarioList=usuarioDAO.findByFilter(filtro);
+		 }catch(Exception e) {
+			 e.printStackTrace();
+		 }
+		 return usuarioList;
+	}
 	
 	public void insert(Usuario usuario) {
 		int usuarioId=usuarioDAO.insert(usuario);
@@ -37,21 +47,39 @@ public class UsuarioManager {
 	}
 	public void update(Usuario usuario) {
 		try {
+			
+			for(Telefone telefone:usuario.getTelefones()) {
+				if(telefone.getId()==0) {
+					telefone.setUsuarioId(usuario.getId());
+					telefoneDAO.insert(telefone);
+				}
+			}
+			
 			this.usuarioDAO.update(usuario);
+			
 		}catch(Exception e) {
 			
 		}
 	}
 	public void delete(Usuario usuario) {
-		this.usuarioDAO.delete(usuario);
+		try {
+			ArrayList<Telefone> telefonesUsuario=this.telefoneDAO.findTelefonesByUsuarioId(usuario.getId());
+			for(Telefone telefone:telefonesUsuario) {
+				this.telefoneDAO.delete(telefone);
+			}
+			this.usuarioDAO.delete(usuario);
+			
+		}catch(Exception e) {
+			
+		}
 	}
 	
-	public boolean login(String login, String senha) {
+	public Usuario login(String login, String senha) {
 		try {
 			return usuarioDAO.login(login, senha);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return false;
+		return null;
 	}
 }

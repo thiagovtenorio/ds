@@ -15,7 +15,12 @@
 </composite:interface>
 <composite:implementation>
 	
-	<center><h2><h:outputText value="Desafio Sefaz"/></h2></center>
+	<center>
+		<h2>
+			<h:outputText value="Desafio Sefaz"/>
+		</h2>
+	</center>
+		<h:outputLabel value="Usuário logado: #{loginBean.nomeUsuarioLogado}"/>
 	
 	<p:menubar>
 		<p:submenu label="Cadastro">
@@ -23,7 +28,6 @@
 			<p:menuitem value="Pesquisar Usuário" url="usuarioList.xhtml"/>
 		</p:submenu>
 	</p:menubar>
-	
 </composite:implementation>
 </body>
 </html>

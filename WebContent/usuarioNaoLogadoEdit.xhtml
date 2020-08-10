@@ -1,52 +1,51 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:composite="http://java.sun.com/jsf/composite"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:tp = "http://java.sun.com/jsf/composite/menu"
-      xmlns:p="http://primefaces.org/ui"> 
-
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:tp="http://java.sun.com/jsf/composite/menu"
+	xmlns:p="http://primefaces.org/ui"> 
+	
 	<h:head>
-	    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1" http-equiv="X-UA-Conpatible" />
-	    <h:outputStylesheet library="css" name="bootstrap.min.css" />
-	    <title>Desafio Sefaz</title>
-	    <style type="text/css">
-	        .btnWidth {
-	            width: 80px;
-	        }     
-	    </style>
+		<meta charset="utf-8" name="viewport"
+			content="width=device-width, initial-scale=1"
+			http-equiv="X-UA-Conpatible" />
+		<h:outputStylesheet library="css" name="bootstrap.min.css" />
+		<title>Desafio Sefaz</title>
+		<style type="text/css">
+		.btnWidth {
+			width: 80px;
+		}
+	</style>
 	</h:head>
-
 	<h:body>
-		<tp:menuSefaz />
-		 <h:form id="adicionarUsuario" class="form-horizontal">
-		 	 <div class="form-group">
-		 	 	<div class="col-sm-4"></div>
-		 	 	<div class="col-sm-4">
-		 	 		<p:outputPanel rendered="#{usuarioEditBean.operacaoInclusao}">
-		 	 			<h2>Cadastrar Usuário</h2>
-		 	 		</p:outputPanel>
-		 	 		<p:outputPanel rendered="#{usuarioEditBean.operacaoAlteracao}">
-		 	 			<h2>Alterar Usuário</h2>
-		 	 		</p:outputPanel>
-		 	 		<p:outputPanel rendered="#{usuarioEditBean.operacaoDetalhamento}">
-		 	 			<h2>Detalhar Usuário</h2>
-		 	 		</p:outputPanel>
-		 	 	</div>
-		 	 </div>
-		 	 <hr/>
-		 	 <div class="form-group">
-		 	 	 <h:outputLabel for="nome" class="control-label col-sm-4">Nome:</h:outputLabel>
-		 	 	 <div class="col-sm-4">
-		 	 	 	<p:inputText id="nome" class="form-control" value="#{usuarioEditBean.usuario.nome}" maxlength="45" style="width:300px;" rendered="#{not usuarioEditBean.operacaoDetalhamento}">
+		<h:form id="adicionarUsuario" class="form-horizontal">
+			<div class="form-group">
+				<div class="col-sm-4"></div>
+				<div class="col-sm-4">
+					<h2>Login Sefaz</h2>
+				</div> 
+			</div>
+			<hr/>
+			<div class="form-group"> 
+				<div class="col-sm-4"></div>
+				<div class="col-sm-3">
+					<p:messages id="messages" showDetail="true" closable="true">
+        				<p:autoUpdate />
+    				</p:messages>
+				</div>
+				<div class="col-sm-3"></div>
+			</div>
+			<div class="form-group"> 
+				 <h:outputLabel for="nome" class="control-label col-sm-4">Nome:</h:outputLabel>
+				 <div class="col-sm-4">
+				 	<p:inputText id="nome" class="form-control" value="#{usuarioEditBean.usuario.nome}" maxlength="45" style="width:300px;" rendered="#{not usuarioEditBean.operacaoDetalhamento}">
 	                </p:inputText>
-	                <h:outputText value="#{usuarioEditBean.usuario.nome}" style="width:300px;" rendered="#{usuarioEditBean.operacaoDetalhamento}">
-	                </h:outputText>
-		 	 	 </div>
-		 	 </div>
-		 	 <div class="form-group">
+				 </div>
+			</div>
+			 <div class="form-group">
 		 	 	 <h:outputLabel for="email" class="control-label col-sm-4">E-mail:</h:outputLabel>
 		 	 	 <div class="col-sm-4">
 		 	 	 	 <h:inputText id="email" class="form-control" value="#{usuarioEditBean.usuario.email}" maxlength="45" style="width:300px;" rendered="#{not usuarioEditBean.operacaoDetalhamento}">
@@ -132,19 +131,19 @@
 		 	  	</div>
 		 	  </div>
 		 	   <div class="form-group">
-		 	   	<h:outputLabel for="senha" class="control-label col-sm-4">Senha:</h:outputLabel>
-		 	   	<div class="col-sm-4">
-		 	   		<h:inputText id="senha" value="#{usuarioEditBean.usuario.senha}" maxlength="23" class="form-control" style="width:200px;" rendered="#{not usuarioEditBean.operacaoDetalhamento}">
-	                </h:inputText>
-	                <h:outputText value="#{usuarioEditBean.usuario.senha}" style="width:200px;" rendered="#{usuarioEditBean.operacaoDetalhamento}">
-	                </h:outputText>
-		 	  	</div>
+		 	   		<h:outputLabel for="senha" class="control-label col-sm-4">Senha:</h:outputLabel>
+			 	   	<div class="col-sm-4">
+			 	   		<h:inputText id="senha" value="#{usuarioEditBean.usuario.senha}" maxlength="23" class="form-control" style="width:200px;" rendered="#{not usuarioEditBean.operacaoDetalhamento}">
+		                </h:inputText>
+		                <h:outputText value="#{usuarioEditBean.usuario.senha}" style="width:200px;" rendered="#{usuarioEditBean.operacaoDetalhamento}">
+		                </h:outputText>
+			 	  	</div>
 		 	  </div>
 		 	  <div class="form-group">
 		 	  	<div class="col-sm-4"></div>
 		 	  	 <div class="col-sm-4">
 		 	  	 	<div class="col-sm-2">
-		 	  	 		 <h:commandButton value="Voltar" class="btn btn-primary" action="usuarioList.xhtml"/>
+		 	  	 		 <h:commandButton value="Voltar" class="btn btn-primary" action="sefazLogin.xhtml"/>
 		 	  	 	</div>
 		 	  	 	<div class="col-sm-2">
 	                    <h:commandButton value="Concluir" action="#{usuarioEditBean.salvar}" class="btn btn-success btnWidth" />
@@ -152,7 +151,6 @@
 		 	  	 </div>
 		 	  </div>
 		 	   <hr/>
-		 </h:form>
+		</h:form>
 	</h:body>
-
 </html>
