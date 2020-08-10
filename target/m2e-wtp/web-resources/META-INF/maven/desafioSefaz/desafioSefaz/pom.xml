@@ -43,10 +43,10 @@
 	</dependency>
   </dependencies>
   <build>
-    <sourceDirectory>JSFCRUD/src</sourceDirectory>
+    <sourceDirectory>desafioSefaz/src</sourceDirectory>
     <resources>
       <resource>
-        <directory>JSFCRUD/src</directory>
+        <directory>desafioSefaz/src</directory>
         <excludes>
           <exclude>**/*.java</exclude>
         </excludes>
